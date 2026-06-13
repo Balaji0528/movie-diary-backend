@@ -61,7 +61,7 @@ public class MovieService {
 
 		Movie movie = convertToEntity(result);
 
-		return repository.save(movie);
+		return movie;
 	}
 
 	public List<Movie> searchMovies(String name) {
