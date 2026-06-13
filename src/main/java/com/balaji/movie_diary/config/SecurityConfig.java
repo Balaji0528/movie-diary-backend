@@ -26,9 +26,13 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		return http.csrf(csrf -> csrf.disable()).cors(Customizer.withDefaults())
-				.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-						.requestMatchers("/auth/register", "/auth/login", "/movies/**").permitAll().anyRequest()
-						.authenticated())
+				.authorizeHttpRequests(auth -> auth
+    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+    .requestMatchers("/auth/register", "/auth/login").permitAll()
+    .requestMatchers(HttpMethod.GET, "/movies/**").permitAll()
+    .requestMatchers("/movies/**").permitAll()
+    .anyRequest().authenticated()
+)
 				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
 	}
 
