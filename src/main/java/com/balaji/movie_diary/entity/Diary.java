@@ -14,7 +14,7 @@ import lombok.Data;
 public class Diary {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String review;
 	private Float rating;
