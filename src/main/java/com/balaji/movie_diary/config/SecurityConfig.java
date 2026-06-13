@@ -23,18 +23,21 @@ public class SecurityConfig {
 	JwtFilter jwtFilter;
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		return http.csrf(csrf -> csrf.disable()).cors(Customizer.withDefaults())
-				.authorizeHttpRequests(auth -> auth
-    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-    .requestMatchers("/auth/register", "/auth/login").permitAll()
-    .requestMatchers(HttpMethod.GET, "/movies/**").permitAll()
-    .requestMatchers("/movies/**").permitAll()
-    .anyRequest().authenticated()
-)
-				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
-	}
+    return http
+            .csrf(csrf -> csrf.disable())
+            .cors(Customizer.withDefaults())
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                    .requestMatchers("/auth/register", "/auth/login").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/movies/**").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/movies").permitAll()
+                    .anyRequest().authenticated()
+            )
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+            .build();
+}
 
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
